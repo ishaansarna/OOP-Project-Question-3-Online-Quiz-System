@@ -83,7 +83,8 @@ public class  Admin {
         System.out.println("\n\nThe Leaderboard");
         System.out.println("__________________________________________");
         for (Student student : students) {
-            System.out.println("Rank " + student.getLeaderBoardPosition() + " is " + student.getName());
+            System.out.println("Rank " + student.getLeaderBoardPosition() + " is " + student.getName() +
+                    " with a score of " + student.getTotalScore());
         }
         resetStudentsOrder();
     }
