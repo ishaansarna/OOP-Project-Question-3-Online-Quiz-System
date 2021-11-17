@@ -75,7 +75,6 @@ public class Question {
                     answerSelected = Integer.parseInt(in.readLine());
                 } else {
                     System.out.println("You ran out of time :(");
-                    System.out.println("________________________");
                     return 0;
                 }
 
@@ -96,7 +95,6 @@ public class Question {
         else {
             System.out.println("Congratulations, you have got " + pointsWon + " points!");
         }
-        System.out.println("________________________");
         return pointsWon;
     }
 }
