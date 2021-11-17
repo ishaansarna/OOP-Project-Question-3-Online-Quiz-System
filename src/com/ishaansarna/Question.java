@@ -2,25 +2,20 @@ package com.ishaansarna;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Question {
-    private String question = "";
-    private int questionID;
+    private String question;
     private List<String> answers;
-    private int correctAnswer; // 1-index
-    private int difficulty; // 1, 2 or 3
-    private int points;
+    private final int correctAnswer; // 1-index
+    private final int points;
 
-    public Question(String question, int questionID, List<String> answers, int correctAnswer, int difficulty, int points) {
+    public Question(String question, List<String> answers, int correctAnswer, int points) {
         this.question = question;
-        this.questionID = questionID;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
-        this.difficulty = difficulty;
         this.points = points;
     }
 
@@ -57,7 +52,7 @@ public class Question {
             i++;
         }
         Scanner answerScanner = new Scanner(System.in);
-        int answerSelected = 0;
+        int answerSelected;
         boolean repeat = true;
         int pointsWon = 0;
         while (repeat) {
