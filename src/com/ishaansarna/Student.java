@@ -1,5 +1,7 @@
 package com.ishaansarna;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -35,10 +37,11 @@ public class Student implements Runnable {
         return leaderBoardPosition;
     }
 
-    public void attemptQuestion(Question question) {
+    public void attemptQuestion(@NotNull Question question) {
         System.out.println("Question for " + this.name + " with roll no. " + this.rollNo);
-        System.out.println("Current score is " + this.totalScore);
         updateScore(question.attemptQuestion());
+        System.out.println("Current score is " + this.totalScore);
+        System.out.println("________________________");
     }
 
     public void viewLeaderboardPosition() {
