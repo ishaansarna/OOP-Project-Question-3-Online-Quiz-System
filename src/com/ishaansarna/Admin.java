@@ -1,7 +1,9 @@
 package com.ishaansarna;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class  Admin {
 
@@ -32,9 +34,12 @@ public class  Admin {
         https://www.sawaal.com/general-knowledge/general-awareness-questions-and-answers.htm
         https://github.com/appbrewery/Quizzler-iOS13-Completed
          */
-        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3));
-        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3));
-        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3));
+//        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3));
+//        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3));
+//        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3));
+        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3, 2));
+        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3, 5));
+        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3, 6));
         questions.add(new Question("What do the letters in the GMT time zone stand for?", List.of(new String[]{"Global Meridian Time", "Greenwich Mean Time", "General Median Time"}), 2, 3));
         questions.add(new Question("What is the French word for 'hat'?", List.of(new String[]{"Chapeau", "Écharpe", "Bonnet"}), 1, 3));
         questions.add(new Question("In past times, what would a gentleman keep in his fob pocket?", List.of(new String[]{"Notebook", "Handkerchief", "Watch"}), 3, 3));
@@ -97,5 +102,69 @@ public class  Admin {
         this.name = name;
     }
 
+    public void addQuestion() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What is the question");
+        String question = scanner.nextLine();
+        System.out.println("What are the options? (Enter an option on each line, enter \"d\" to finish adding)");
+        List<String> options = new ArrayList<>();
+        while (true){
+            String option = scanner.nextLine();
+            if (option.equalsIgnoreCase("d")) {
+                break;
+            }
+            options.add(option);
+        }
+        if (options.size() < 2) {
+            System.err.println("Please enter at least two options");
+            return;
+        }
+        int correctAnswer, points, time;
+        try {
+            System.out.println("Please enter the option number of the correct answer");
+            correctAnswer = Integer.parseInt(scanner.nextLine());
+            if (correctAnswer > options.size() || correctAnswer <= 0) {
+                throw new InputMismatchException();
+            }
+            System.out.println("Please enter the number of points");
+            points = Integer.parseInt(scanner.nextLine());
+            System.out.println("Please enter the time for this question (enter 0 for default value)");
+            time = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Please enter an integer");
+            return;
+        } catch (InputMismatchException e) {
+            System.err.println("Please enter a valid option number");
+            return;
+        }
+        questions.add(new Question(question, options, correctAnswer, points, time));
+    }
 
+    public void removeQuestion() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the question to be removed");
+        questions.removeIf(question -> question.getQuestion().equalsIgnoreCase(scanner.nextLine()));
+    }
+
+    public void addStudent() {
+        // todo
+    }
+
+    public void removeStudent() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the name of the student to be removed");
+        students.removeIf(student -> student.getName().equalsIgnoreCase(scanner.nextLine()));
+    }
+
+    public void viewQuestions() {
+        // todo
+    }
+
+    public void viewStudents() {
+        // todo
+    }
+
+    public void driver() {
+        // todo
+    }
 }
