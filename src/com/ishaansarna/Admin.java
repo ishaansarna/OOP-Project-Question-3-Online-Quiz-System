@@ -27,6 +27,11 @@ public class  Admin {
         students.add(new Student("Shyam", 2, this));
         students.add(new Student("Ghanshyam", 3, this));
         students.add(new Student("Radheshyam", 4, this));
+        /*
+        Questions courtesy of
+        https://www.sawaal.com/general-knowledge/general-awareness-questions-and-answers.htm
+        https://github.com/appbrewery/Quizzler-iOS13-Completed
+         */
         questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3));
         questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3));
         questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3));
