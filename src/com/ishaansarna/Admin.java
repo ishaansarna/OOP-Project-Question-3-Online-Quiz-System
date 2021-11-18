@@ -5,19 +5,21 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class  Admin {
+public class  Admin implements Runnable {
 
     private Question currentQuestion;
     private String name;
     private final List<Student> students;
     private final List<Question> questions;
     public boolean quizRunning;
+    public Thread thread;
 
     public Admin(String name) {
         this.name = name;
         this.students = new ArrayList<>();
         this.questions = new ArrayList<>();
         this.quizRunning = false;
+        this.thread = new Thread(this, "Admin Thread");
     }
 
     public Question getCurrentQuestion() {
@@ -164,7 +166,14 @@ public class  Admin {
         // todo
     }
 
-    public void driver() {
+    public void run() {
         // todo
+        try {
+            addDefaultSetOfStudentsAndQuestions();
+            conductQuiz();
+            displayLeaderboard();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

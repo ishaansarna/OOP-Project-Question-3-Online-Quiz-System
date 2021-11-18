@@ -10,7 +10,6 @@ public class Student implements Runnable {
     private int rollNo;
     private int totalScore;
     private int leaderBoardPosition;
-    private boolean suspendFlag;
     private final Admin admin;
     private boolean exit;
     public Thread thread;
@@ -20,7 +19,6 @@ public class Student implements Runnable {
         this.rollNo = rollNo;
         this.totalScore = 0;
         this.leaderBoardPosition = -1;
-        this.suspendFlag = true;
         this.admin = admin;
         this.thread = new Thread(this, name + " Thread");
     }
@@ -95,7 +93,6 @@ public class Student implements Runnable {
     }
 
     synchronized public void setSuspendFlag(boolean suspendFlag) {
-        this.suspendFlag = suspendFlag;
     }
 
     public String getName() {
