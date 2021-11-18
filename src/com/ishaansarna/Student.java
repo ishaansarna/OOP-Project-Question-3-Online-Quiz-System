@@ -38,8 +38,13 @@ public class Student implements Runnable {
     public void attemptQuestion(@NotNull Question question) {
         System.out.println("Question for " + this.name + " with roll no. " + this.rollNo);
         updateScore(question.attemptQuestion());
-        System.out.println("Current score is " + this.totalScore);
+        System.out.println("Your current score is " + this.totalScore);
         System.out.println("________________________");
+        try {
+            wait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void viewLeaderboardPosition() {
