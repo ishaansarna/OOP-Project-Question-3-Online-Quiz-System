@@ -1,13 +1,7 @@
 package com.ishaansarna;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 public class Question {
     private final String question;
@@ -15,6 +9,7 @@ public class Question {
     private final int correctAnswer; // 1-index
     private final int points;
     private final int time;
+    private int answerSelected;
 
     public Question(String question, List<String> answers, int correctAnswer, int points) {
         this.question = question;
@@ -59,15 +54,13 @@ public class Question {
             System.out.println(i + ") " + answer);
             i++;
         }
-        Scanner answerScanner = new Scanner(System.in);
-        int answerSelected;
         boolean repeat = true;
         int pointsWon = 0;
         while (repeat) {
             try {
                 long startTime = System.currentTimeMillis();
 
-                answerSelected = Timer.quizTimedQuestion(startTime, time);
+                answerSelected = Integer.parseInt(Timer.quizTimedQuestion(startTime, time));
 
                 if (answerSelected >= 1 && answerSelected <= answers.size()) {
                     pointsWon = answerSelected == this.correctAnswer ? points : 0;
@@ -84,7 +77,7 @@ public class Question {
                 else {
                     throw new InputMismatchException();
                 }
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException | NumberFormatException e) {
                 System.out.println("Please enter an integer between 1 and " + answers.size());
             }
         }
@@ -95,5 +88,10 @@ public class Question {
             System.out.println("Congratulations, you have got " + pointsWon + " points!");
         }
         return pointsWon;
+    }
+
+    public AttemptedQuestion returnAttemptedQuestion() {
+        String chosenAnswer = answerSelected > 0 ? answers.get(answerSelected-1) : "Timeout";
+        return new AttemptedQuestion(question, answers.get(correctAnswer-1), chosenAnswer);
     }
 }

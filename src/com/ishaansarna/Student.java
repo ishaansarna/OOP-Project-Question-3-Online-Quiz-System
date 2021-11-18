@@ -2,7 +2,9 @@ package com.ishaansarna;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Student implements Runnable {
@@ -13,6 +15,7 @@ public class Student implements Runnable {
     private final Admin admin;
     private boolean exit;
     public Thread thread;
+    private List<AttemptedQuestion> attemptedQuestions;
 
     public Student(String name, int rollNo, Admin admin) {
         this.name = name;
@@ -21,6 +24,7 @@ public class Student implements Runnable {
         this.leaderBoardPosition = -1;
         this.admin = admin;
         this.thread = new Thread(this, name + " Thread");
+        this.attemptedQuestions = new ArrayList<>();
     }
 
     public void updateScore(int score) {
@@ -40,11 +44,13 @@ public class Student implements Runnable {
         updateScore(question.attemptQuestion());
         System.out.println("Your current score is " + this.totalScore);
         System.out.println("________________________");
-        try {
-            wait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        attemptedQuestions.add(question.returnAttemptedQuestion());
+//  todo remove comment
+//        try {
+//            wait(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void viewLeaderboardPosition() {
@@ -56,6 +62,7 @@ public class Student implements Runnable {
         synchronized (this) {
             while (!exit){
                 if (!admin.isQuizRunning()) {
+                    System.out.println();
                     System.out.println(this.name + ", do you want to see your details? [y/n]");
                     Scanner scanner = new Scanner(System.in);
                     boolean repeat = true;
@@ -70,14 +77,13 @@ public class Student implements Runnable {
                             }
                         } catch (InputMismatchException e) {
                             System.out.println("Please enter either y or n");
-                            scanner.next();
+                            scanner.nextLine();
                         }
                     }
-                    switch (choice) {
-                        case "y" -> showDetails();
-                        case "n" -> System.out.println("Thank you for playing");
-                        default -> System.err.println("Invalid input");
+                    if ("y".equals(choice)) {
+                        showDetails();
                     }
+                    System.out.println("Thank you for playing");
                 } else {
                     attemptQuestion(admin.getCurrentQuestion());
                 }
@@ -95,9 +101,22 @@ public class Student implements Runnable {
         System.out.println("Roll No.: " + this.rollNo);
         System.out.println("Total Score: " + this.totalScore);
         System.out.println("Leaderboard Position " + this.leaderBoardPosition);
-    }
-
-    synchronized public void setSuspendFlag(boolean suspendFlag) {
+        System.out.println("Would you like to see your attempts? (y/n)");
+        Scanner choiceScanner = new Scanner(System.in);
+        String choiceInput = "n";
+        boolean flag = true;
+        while (flag) {
+            choiceInput = choiceScanner.nextLine();
+            if (choiceInput.equalsIgnoreCase("y") || choiceInput.equalsIgnoreCase("n")) {
+                flag = false;
+            }
+            else {
+                System.err.println("Please enter a valid input");
+            }
+        }
+        if (choiceInput.equalsIgnoreCase("y")) {
+            displayAttemptedQuestions();
+        }
     }
 
     public String getName() {
@@ -129,5 +148,11 @@ public class Student implements Runnable {
 
     public int getTotalScore() {
         return totalScore;
+    }
+
+    public void displayAttemptedQuestions() {
+        for (AttemptedQuestion attemptedQuestion : attemptedQuestions) {
+            attemptedQuestion.display();
+        }
     }
 }
