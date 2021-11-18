@@ -65,27 +65,26 @@ public class Question {
         int pointsWon = 0;
         while (repeat) {
             try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
                 long startTime = System.currentTimeMillis();
-                // For timeout:
-                //noinspection StatementWithEmptyBody
-                while ((System.currentTimeMillis() - startTime) < time * 1000L && !in.ready()) {
-                }
-                if (in.ready()) {
-                    answerSelected = Integer.parseInt(in.readLine());
-                } else {
-                    System.out.println("You ran out of time :(");
-                    return 0;
-                }
+
+                answerSelected = Timer.quizTimedQuestion(startTime, time);
 
                 if (answerSelected >= 1 && answerSelected <= answers.size()) {
                     pointsWon = answerSelected == this.correctAnswer ? points : 0;
                     repeat = false;
                 }
+                else if (answerSelected == 0) {
+                    System.out.println("You ran out of time :(");
+                    return 0;
+                }
+                else if (answerSelected == -1) {
+                    System.out.println("Error detected, proceeding to next question");
+                    return 0;
+                }
                 else {
                     throw new InputMismatchException();
                 }
-            } catch (InputMismatchException | IOException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Please enter an integer between 1 and " + answers.size());
             }
         }
