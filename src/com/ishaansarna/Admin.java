@@ -149,7 +149,7 @@ public class  Admin implements Runnable {
     }
 
     public void addStudent() {
-        // todo
+        students.add(Student.createStudentPrompt(this));
     }
 
     public void removeStudent() {
@@ -159,17 +159,25 @@ public class  Admin implements Runnable {
     }
 
     public void viewQuestions() {
-        // todo
+        for (int i = 0; i < questions.size(); i++) {
+            System.out.println((i+1) + ")");
+            questions.get(i).viewQuestion();
+        }
     }
 
     public void viewStudents() {
-        // todo
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println((i+1) + ") ");
+            students.get(i).viewStudent();
+        }
     }
 
     public void run() {
         // todo
         try {
             addDefaultSetOfStudentsAndQuestions();
+            viewStudents();
+            viewQuestions();
             conductQuiz();
             displayLeaderboard();
         } catch (InterruptedException e) {
