@@ -1,5 +1,6 @@
 package com.ishaansarna;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Student implements Runnable {
     private final Admin admin;
     private boolean exit;
     public Thread thread;
-    private List<AttemptedQuestion> attemptedQuestions;
+    private final List<AttemptedQuestion> attemptedQuestions;
 
     public Student(String name, int rollNo, Admin admin) {
         this.name = name;
@@ -97,10 +98,7 @@ public class Student implements Runnable {
     }
 
     public void showDetails() {
-        System.out.println("Name: " + this.name);
-        System.out.println("Roll No.: " + this.rollNo);
-        System.out.println("Total Score: " + this.totalScore);
-        System.out.println("Leaderboard Position " + this.leaderBoardPosition);
+        showBasicDetails();
         System.out.println("Would you like to see your attempts? (y/n)");
         Scanner choiceScanner = new Scanner(System.in);
         String choiceInput = "n";
@@ -153,6 +151,41 @@ public class Student implements Runnable {
     public void displayAttemptedQuestions() {
         for (AttemptedQuestion attemptedQuestion : attemptedQuestions) {
             attemptedQuestion.display();
+        }
+    }
+
+    @Contract("_ -> new")
+    public static @NotNull Student createStudentPrompt(Admin admin) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the name of the student");
+        String name = scanner.nextLine();
+        System.out.println("Please enter the roll number of the student");
+        boolean flag = true;
+        int rollNo = 0;
+        while (flag) {
+            try {
+                rollNo = scanner.nextInt();
+                flag = false;
+            }
+            catch (InputMismatchException e) {
+                System.err.println("Please enter a valid integer");
+            }
+        }
+        return new Student(name, rollNo, admin);
+    }
+
+    public void viewStudent() {
+        showBasicDetails();
+    }
+
+    private void showBasicDetails() {
+        System.out.println("Name: " + this.name);
+        System.out.println("Roll No.: " + this.rollNo);
+        System.out.println("Total Score: " + this.totalScore);
+        if (this.leaderBoardPosition != -1) {
+            System.out.println("Leaderboard Position: " + this.leaderBoardPosition);
+        } else {
+            System.out.println("Did not take part in a quiz yet so leaderboard position is not applicable");
         }
     }
 }

@@ -94,4 +94,14 @@ public class Question {
         String chosenAnswer = answerSelected > 0 ? answers.get(answerSelected-1) : "Timeout";
         return new AttemptedQuestion(question, answers.get(correctAnswer-1), chosenAnswer);
     }
+
+    public void viewQuestion() {
+        System.out.println("The question is –");
+        System.out.println(this.question);
+        System.out.println("The options are –");
+        for (int i = 1; i <= answers.size(); i++) {
+            System.out.println(i + ") " + answers.get(i-1));
+        }
+        System.out.println("Out of which the correct option is \"" + answers.get(correctAnswer-1) + "\"");
+    }
 }
