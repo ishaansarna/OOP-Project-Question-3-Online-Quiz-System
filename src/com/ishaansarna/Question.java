@@ -1,7 +1,9 @@
 package com.ishaansarna;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Question {
     private final String question;
@@ -103,5 +105,43 @@ public class Question {
             System.out.println(i + ") " + answers.get(i-1));
         }
         System.out.println("Out of which the correct option is \"" + answers.get(correctAnswer-1) + "\"");
+    }
+
+    public static Question addQuestion() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What is the question");
+        String question = scanner.nextLine();
+        System.out.println("What are the options? (Enter an option on each line, enter \"d\" to finish adding)");
+        List<String> options = new ArrayList<>();
+        while (true){
+            String option = scanner.nextLine();
+            if (option.equalsIgnoreCase("d")) {
+                break;
+            }
+            options.add(option);
+        }
+        if (options.size() < 2) {
+            System.err.println("Please enter at least two options");
+            return null;
+        }
+        int correctAnswer, points, time;
+        try {
+            System.out.println("Please enter the option number of the correct answer");
+            correctAnswer = Integer.parseInt(scanner.nextLine());
+            if (correctAnswer > options.size() || correctAnswer <= 0) {
+                throw new InputMismatchException();
+            }
+            System.out.println("Please enter the number of points");
+            points = Integer.parseInt(scanner.nextLine());
+            System.out.println("Please enter the time for this question (enter 0 for default value)");
+            time = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Please enter an integer");
+            return null;
+        } catch (InputMismatchException e) {
+            System.err.println("Please enter a valid option number");
+            return null;
+        }
+        return new Question(question, options, correctAnswer, points, time);
     }
 }

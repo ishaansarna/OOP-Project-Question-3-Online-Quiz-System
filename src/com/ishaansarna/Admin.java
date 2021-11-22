@@ -105,41 +105,10 @@ public class  Admin implements Runnable {
     }
 
     public void addQuestion() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("What is the question");
-        String question = scanner.nextLine();
-        System.out.println("What are the options? (Enter an option on each line, enter \"d\" to finish adding)");
-        List<String> options = new ArrayList<>();
-        while (true){
-            String option = scanner.nextLine();
-            if (option.equalsIgnoreCase("d")) {
-                break;
-            }
-            options.add(option);
+        Question question = Question.addQuestion();
+        if (question != null) {
+            questions.add(question);
         }
-        if (options.size() < 2) {
-            System.err.println("Please enter at least two options");
-            return;
-        }
-        int correctAnswer, points, time;
-        try {
-            System.out.println("Please enter the option number of the correct answer");
-            correctAnswer = Integer.parseInt(scanner.nextLine());
-            if (correctAnswer > options.size() || correctAnswer <= 0) {
-                throw new InputMismatchException();
-            }
-            System.out.println("Please enter the number of points");
-            points = Integer.parseInt(scanner.nextLine());
-            System.out.println("Please enter the time for this question (enter 0 for default value)");
-            time = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.err.println("Please enter an integer");
-            return;
-        } catch (InputMismatchException e) {
-            System.err.println("Please enter a valid option number");
-            return;
-        }
-        questions.add(new Question(question, options, correctAnswer, points, time));
     }
 
     public void removeQuestion() {
@@ -159,6 +128,7 @@ public class  Admin implements Runnable {
     }
 
     public void viewQuestions() {
+        System.out.println("The questions are:- ");
         for (int i = 0; i < questions.size(); i++) {
             System.out.println((i+1) + ")");
             questions.get(i).viewQuestion();
@@ -166,6 +136,7 @@ public class  Admin implements Runnable {
     }
 
     public void viewStudents() {
+        System.out.println("The students are:- ");
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i+1) + ") ");
             students.get(i).viewStudent();
