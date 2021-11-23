@@ -8,14 +8,12 @@ import java.util.Scanner;
 public class  Admin implements Runnable {
 
     private Question currentQuestion;
-    private String name;
     private final List<Student> students;
     private final List<Question> questions;
     public boolean quizRunning;
     public Thread thread;
 
-    public Admin(String name) {
-        this.name = name;
+    public Admin() {
         this.students = new ArrayList<>();
         this.questions = new ArrayList<>();
         this.quizRunning = false;
@@ -51,6 +49,7 @@ public class  Admin implements Runnable {
         questions.add(new Question("Golf player Vijay Singh belongs to which country?", List.of(new String[]{"USA", "UK", "India", "Fiji"}), 4, 3));
         questions.add(new Question("FFC stands for", List.of(new String[]{"Federation of Football Council", "Film Finance Corporation", "Foreign Finance Corporation"}), 2, 3));
         questions.add(new Question("Which is a green planet in the solar system?", List.of(new String[]{"Pluto", "Venus", "Uranus", "Mars"}), 3, 3));
+        System.out.println("Added default set of students and questions");
     }
 
     public boolean isQuizRunning() {
@@ -76,6 +75,7 @@ public class  Admin implements Runnable {
         for (Student student : students) {
             student.runThis();
         }
+        displayLeaderboard();
     }
 
     public void sortStudentsByLeaderboardPosition() {
@@ -100,14 +100,6 @@ public class  Admin implements Runnable {
         resetStudentsOrder();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void addQuestion() {
         Question question = Question.addQuestion();
         if (question != null) {
@@ -128,7 +120,13 @@ public class  Admin implements Runnable {
     public void removeQuestion() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the question to be removed");
-        questions.removeIf(question -> question.getQuestion().equalsIgnoreCase(scanner.nextLine()));
+        String questionText = scanner.nextLine();
+        if (questions.removeIf(question -> question.getQuestion().equalsIgnoreCase(questionText))) {
+            System.out.println("Successfully removed the question \"" + questionText + "\"");
+        }
+        else {
+            System.err.println("No question matching \"" + questionText + "\"");
+        }
     }
 
     public void addStudent() {
@@ -148,7 +146,13 @@ public class  Admin implements Runnable {
     public void removeStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the name of the student to be removed");
-        students.removeIf(student -> student.getName().equalsIgnoreCase(scanner.nextLine()));
+        String name = scanner.nextLine();
+        if (students.removeIf(student -> student.getName().equalsIgnoreCase(name))) {
+            System.out.println("Successfully removed " + name);
+        }
+        else {
+            System.err.println("No student by the name " + name);
+        }
     }
 
     public void viewQuestions() {
@@ -176,16 +180,55 @@ public class  Admin implements Runnable {
     }
 
     public void run() {
-        // todo
-        try {
-//            addDefaultSetOfStudentsAndQuestions();
-            addNQuestions();
-            viewStudents();
-            viewQuestions();
-            conductQuiz();
-            displayLeaderboard();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            try {
+                System.out.println("Welcome to Quizzy–The Online Quiz System");
+                //noinspection InfiniteLoopStatement
+                while (true){
+                    System.out.println("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––");
+                    System.out.println("What would you like to do? Please select the appropriate option.");
+                    System.out.println("1. Conduct quiz");
+                    System.out.println("2. Add a student");
+                    System.out.println("3. Add n students");
+                    System.out.println("4. Add a question");
+                    System.out.println("5. Add n questions");
+                    System.out.println("6. View all students");
+                    System.out.println("7. View all questions");
+                    System.out.println("8. Remove a student");
+                    System.out.println("9. Remove a question");
+                    System.out.println("10. View the leaderboard");
+                    System.out.println("11. Add default set of students and questions");
+                    System.out.println("12. Exit");
+
+                    Scanner scanner = new Scanner(System.in);
+                    int choice = Integer.parseInt(scanner.nextLine());
+                    switch (choice) {
+                        case 1 -> conductQuiz();
+                        case 2 -> addStudent();
+                        case 3 -> addNStudents();
+                        case 4 -> addQuestion();
+                        case 5 -> addNQuestions();
+                        case 6 -> viewStudents();
+                        case 7 -> viewQuestions();
+                        case 8 -> removeStudent();
+                        case 9 -> removeQuestion();
+                        case 10 -> displayLeaderboard();
+                        case 11 -> addDefaultSetOfStudentsAndQuestions();
+                        case 12 -> exit();
+                        default -> System.err.println("Please enter a valid option");
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter a valid integer");
+            }
         }
+    }
+
+    public void exit() {
+        System.out.println("Thank you for  using Quizzy–The Online Quiz System");
+        System.exit(0);
     }
 }
