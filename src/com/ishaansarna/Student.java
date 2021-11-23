@@ -46,12 +46,11 @@ public class Student implements Runnable {
         System.out.println("Your current score is " + this.totalScore);
         System.out.println("________________________");
         attemptedQuestions.add(question.returnAttemptedQuestion());
-//  todo remove comment
-//        try {
-//            wait(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            wait(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void viewLeaderboardPosition() {
