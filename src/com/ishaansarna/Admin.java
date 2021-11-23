@@ -58,6 +58,10 @@ public class  Admin implements Runnable {
     }
 
     public void conductQuiz() throws InterruptedException {
+        if (students.isEmpty() || questions.isEmpty()) {
+            System.err.println("Please add at least 1 student and question each");
+            return;
+        }
         quizRunning = true;
         for (int i = 0, j = 0; i < questions.size(); i++, j++) {
             if (j >= students.size()) {
@@ -111,6 +115,16 @@ public class  Admin implements Runnable {
         }
     }
 
+    public void addNQuestions() {
+        System.out.println("How many questions would you like to add");
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            System.out.println("Please add question number " + (i+1));
+            addQuestion();
+        }
+    }
+
     public void removeQuestion() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the question to be removed");
@@ -121,6 +135,16 @@ public class  Admin implements Runnable {
         students.add(Student.createStudentPrompt(this));
     }
 
+    public void addNStudents() {
+        System.out.println("How many students would you like to add");
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            System.out.println("Please add student number " + (i+1));
+            addStudent();
+        }
+    }
+
     public void removeStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the name of the student to be removed");
@@ -128,6 +152,10 @@ public class  Admin implements Runnable {
     }
 
     public void viewQuestions() {
+        if (questions.isEmpty()) {
+            System.err.println("No questions added yet");
+            return;
+        }
         System.out.println("The questions are:- ");
         for (int i = 0; i < questions.size(); i++) {
             System.out.println((i+1) + ")");
@@ -136,6 +164,10 @@ public class  Admin implements Runnable {
     }
 
     public void viewStudents() {
+        if (students.isEmpty()) {
+            System.err.println("No students added yet");
+            return;
+        }
         System.out.println("The students are:- ");
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i+1) + ") ");
@@ -146,7 +178,8 @@ public class  Admin implements Runnable {
     public void run() {
         // todo
         try {
-            addDefaultSetOfStudentsAndQuestions();
+//            addDefaultSetOfStudentsAndQuestions();
+            addNQuestions();
             viewStudents();
             viewQuestions();
             conductQuiz();
