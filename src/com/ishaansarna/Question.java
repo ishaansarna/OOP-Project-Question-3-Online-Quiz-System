@@ -26,7 +26,7 @@ public class Question {
         this.answers = answers;
         this.correctAnswer = correctAnswer;
         this.points = points;
-        this.time = time == 0 ? Math.max(20*points, 180) : time;
+        this.time = time == 0 ? Math.min(10*points, 180) : time;
     }
 
     public String getQuestion() {
