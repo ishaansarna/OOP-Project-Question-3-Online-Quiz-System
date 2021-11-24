@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class  Admin implements Runnable {
+public class Admin implements Runnable {
 
     private Question currentQuestion;
     private final List<Student> students;
