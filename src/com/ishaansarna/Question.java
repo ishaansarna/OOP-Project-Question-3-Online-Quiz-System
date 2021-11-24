@@ -45,10 +45,9 @@ public class Question {
         }
         boolean repeat = true;
         int pointsWon = 0;
+        long startTime = System.currentTimeMillis();
         while (repeat) {
             try {
-                long startTime = System.currentTimeMillis();
-
                 answerSelected = Integer.parseInt(Timer.quizTimedQuestion(startTime, time));
 
                 if (answerSelected >= 1 && answerSelected <= answers.size()) {
