@@ -79,7 +79,7 @@ public class  Admin implements Runnable {
 
     public void sortStudentsByLeaderboardPosition() {
         if (hasQuizBeenConducted) {
-            students.sort(new compareByScore());
+            students.sort(new CompareByScore());
             for (int i = 0; i < students.size(); i++) {
                 students.get(i).setLeaderBoardPosition(i+1);
             }
@@ -87,7 +87,7 @@ public class  Admin implements Runnable {
     }
 
     public void resetStudentsOrder() {
-        students.sort(new compareByRollNo());
+        students.sort(new CompareByRollNo());
     }
 
     public void displayLeaderboard() {
