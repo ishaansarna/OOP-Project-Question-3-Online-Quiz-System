@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Student implements Runnable {
-    private String name;
-    private int rollNo;
+    private final String name;
+    private final int rollNo;
     private int totalScore;
     private int leaderBoardPosition;
     private final Admin admin;
@@ -51,10 +51,6 @@ public class Student implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void viewLeaderboardPosition() {
-        System.out.println("Your leaderboard position is " + this.leaderBoardPosition);
     }
 
     @Override
@@ -120,16 +116,8 @@ public class Student implements Runnable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getRollNo() {
         return rollNo;
-    }
-
-    public void setRollNo(int rollNo) {
-        this.rollNo = rollNo;
     }
 
     public void createThread() {

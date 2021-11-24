@@ -13,18 +13,6 @@ public class AttemptedQuestion {
         this.isAnswerCorrect = correctAnswerValue.equalsIgnoreCase(chosenAnswer);
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getCorrectAnswerValue() {
-        return correctAnswerValue;
-    }
-
-    public String getChosenAnswer() {
-        return chosenAnswer;
-    }
-
     public void display() {
         if (isAnswerCorrect) {
             System.out.println("You got the question \"" + question + "\" correct!");

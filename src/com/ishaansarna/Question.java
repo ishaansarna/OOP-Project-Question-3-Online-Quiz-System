@@ -18,7 +18,7 @@ public class Question {
         this.answers = answers;
         this.correctAnswer = correctAnswer;
         this.points = points;
-        this.time = Math.max(20*points, 180);
+        this.time = Math.min(10*points, 180);
     }
 
     public Question(String question, List<String> answers, int correctAnswer, int points, int time) {
@@ -32,19 +32,6 @@ public class Question {
     public String getQuestion() {
         return question;
     }
-//
-//    public List<String> getAnswers() {
-//        return answers;
-//    }
-//
-//    public boolean isAnswerCorrect(@NotNull String answer) {
-//        // compare string to all options and return whether it is correct
-//        return answer.equalsIgnoreCase(answers.get(correctAnswer));
-//    }
-//
-//    public boolean isAnswerCorrect(int optionNumber) {
-//        return optionNumber == correctAnswer;
-//    }
 
     public int attemptQuestion() {
         System.out.println("For " + points + " points with a time limit of " + time + " seconds");
