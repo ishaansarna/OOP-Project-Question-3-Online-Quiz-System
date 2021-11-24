@@ -8,7 +8,7 @@ Post completion, the students are allowed to view their scores, leaderboard posi
 
 # Features
 
-- The questions timeout when no response is received. The time allotted for each question can be set.
+- The questions' timeout when no response is received. The time allotted for each question can be set.
 - A leaderboard is displayed after the quiz.
 - The students can view their scores, leaderboard positions and the details of their attempts.
 - The correct answer along with the points scored are shown after each question.

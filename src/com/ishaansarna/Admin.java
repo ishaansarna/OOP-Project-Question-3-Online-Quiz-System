@@ -1,7 +1,6 @@
 package com.ishaansarna;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,13 +10,15 @@ public class  Admin implements Runnable {
     private final List<Student> students;
     private final List<Question> questions;
     public boolean quizRunning;
-    public Thread thread;
+    public final Thread thread;
+    private boolean hasQuizBeenConducted;
 
     public Admin() {
         this.students = new ArrayList<>();
         this.questions = new ArrayList<>();
         this.quizRunning = false;
         this.thread = new Thread(this, "Admin Thread");
+        hasQuizBeenConducted = false;
     }
 
     public Question getCurrentQuestion() {
@@ -34,21 +35,18 @@ public class  Admin implements Runnable {
         https://www.sawaal.com/general-knowledge/general-awareness-questions-and-answers.htm
         https://github.com/appbrewery/Quizzler-iOS13-Completed
          */
-//        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3));
-//        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3));
-//        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3));
-        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 3, 4));
-        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3, 5));
-        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 3, 6));
-        questions.add(new Question("What do the letters in the GMT time zone stand for?", List.of(new String[]{"Global Meridian Time", "Greenwich Mean Time", "General Median Time"}), 2, 3));
-        questions.add(new Question("What is the French word for 'hat'?", List.of(new String[]{"Chapeau", "Écharpe", "Bonnet"}), 1, 3));
-        questions.add(new Question("In past times, what would a gentleman keep in his fob pocket?", List.of(new String[]{"Notebook", "Handkerchief", "Watch"}), 3, 3));
-        questions.add(new Question("How would one say goodbye in Spanish?", List.of(new String[]{"Au Revoir", "Adiós", "Salir"}), 2, 3));
-        questions.add(new Question("Which of these colours is NOT featured in the logo for Google?", List.of(new String[]{"Green", "Orange", "Blue"}), 2, 3));
-        questions.add(new Question("Where is Tasmania located?", List.of(new String[]{"Indonesia", "Australia", "Scotland", "India"}), 2, 3));
+        questions.add(new Question("Fathometer is used to measure?", List.of(new String[]{"Earthquakes", "Rainfall", "Ocean depth"}), 3, 2));
+        questions.add(new Question("Epsom(England) is the place associated with", List.of(new String[]{"Snooker", "Horse racing", "Shooting"}), 2, 3));
+        questions.add(new Question("Which is the largest organ in the human body?", List.of(new String[]{"Heart", "Skin", "Large Intestine"}), 2, 1));
+        questions.add(new Question("What do the letters in the GMT time zone stand for?", List.of(new String[]{"Global Meridian Time", "Greenwich Mean Time", "General Median Time"}), 2, 1));
+        questions.add(new Question("What is the French word for 'hat'?", List.of(new String[]{"Chapeau", "Écharpe", "Bonnet"}), 1, 2));
+        questions.add(new Question("In past times, what would a gentleman keep in his fob pocket?", List.of(new String[]{"Notebook", "Handkerchief", "Watch"}), 3, 2));
+        questions.add(new Question("How would one say goodbye in Spanish?", List.of(new String[]{"Au Revoir", "Adiós", "Salir"}), 2, 1));
+        questions.add(new Question("Which of these colours is NOT featured in the logo for Google?", List.of(new String[]{"Green", "Orange", "Blue"}), 2, 1));
+        questions.add(new Question("Where is Tasmania located?", List.of(new String[]{"Indonesia", "Australia", "Scotland", "India"}), 2, 1));
         questions.add(new Question("Golf player Vijay Singh belongs to which country?", List.of(new String[]{"USA", "UK", "India", "Fiji"}), 4, 3));
         questions.add(new Question("FFC stands for", List.of(new String[]{"Federation of Football Council", "Film Finance Corporation", "Foreign Finance Corporation"}), 2, 3));
-        questions.add(new Question("Which is a green planet in the solar system?", List.of(new String[]{"Pluto", "Venus", "Uranus", "Mars"}), 3, 3));
+        questions.add(new Question("Which is a green planet in the solar system?", List.of(new String[]{"Pluto", "Venus", "Uranus", "Mars"}), 3, 2));
         System.out.println("Added default set of students and questions");
     }
 
@@ -57,6 +55,7 @@ public class  Admin implements Runnable {
     }
 
     public void conductQuiz() throws InterruptedException {
+        hasQuizBeenConducted = true;
         if (students.isEmpty() || questions.isEmpty()) {
             System.err.println("Please add at least 1 student and question each");
             return;
@@ -79,9 +78,11 @@ public class  Admin implements Runnable {
     }
 
     public void sortStudentsByLeaderboardPosition() {
-        students.sort(new compareByScore());
-        for (int i = 0; i < students.size(); i++) {
-            students.get(i).setLeaderBoardPosition(i+1);
+        if (hasQuizBeenConducted) {
+            students.sort(new compareByScore());
+            for (int i = 0; i < students.size(); i++) {
+                students.get(i).setLeaderBoardPosition(i+1);
+            }
         }
     }
 
