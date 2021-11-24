@@ -9,7 +9,7 @@ public class Admin implements Runnable {
     private Question currentQuestion;
     private final List<Student> students;
     private final List<Question> questions;
-    public boolean quizRunning;
+    private boolean quizRunning;
     public final Thread thread;
     private boolean hasQuizBeenConducted;
 
@@ -26,10 +26,10 @@ public class Admin implements Runnable {
     }
 
     public void addDefaultSetOfStudentsAndQuestions() {
-        students.add(new Student("Ram", 1, this));
-        students.add(new Student("Shyam", 2, this));
-        students.add(new Student("Ghanshyam", 3, this));
-        students.add(new Student("Radheshyam", 4, this));
+        students.add(new Student("John", 1, this));
+        students.add(new Student("Amy", 2, this));
+        students.add(new Student("Lisa", 3, this));
+        students.add(new Student("Mark", 4, this));
         /*
         Questions courtesy of
         https://www.sawaal.com/general-knowledge/general-awareness-questions-and-answers.htm
