@@ -132,6 +132,7 @@ public class Admin implements Runnable {
 
     public void addStudent() {
         students.add(Student.createStudentPrompt(this));
+        resetStudentsOrder();
     }
 
     public void addNStudents() {
@@ -142,6 +143,7 @@ public class Admin implements Runnable {
             System.out.println("Please add student number " + (i+1));
             addStudent();
         }
+        resetStudentsOrder();
     }
 
     public void removeStudent() {
