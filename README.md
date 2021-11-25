@@ -15,6 +15,8 @@ Post completion, the students are allowed to view their scores, leaderboard posi
 
 # How to run
 
+Download the executables from releases in GitHub
+
 ## On Linux/MacOS systems
 
 1. Open a terminal window and cd to the location where you have stored the `OOP Project Question 3 Online Quiz System.jar` file
@@ -31,7 +33,7 @@ OpenJDK 64-Bit Server VM (build 17+35-2724, mixed mode, sharing)
 
 #### **UNTESTED**
 
-1. Double click the provided .bat file
+1. Double-click the provided .bat file
     1. Ensure that the .bat file is in the same location as the .jar file
     2. Ensure that java is installed on the system
 
